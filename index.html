@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tetris Game</title>
+	<link rel="stylesheet" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Limelight" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+	<div class="header">
+	<h2>TETRIS</h2>
+	</div>
+	<div class="row">
+	<div class="leftSide">
+	<div>YOUR SCORE</div>
+	<br>
+	<div id="score"></div>
+	</div>
+	<canvas id="tetris" width ="360" height ="600" style="display:inline-block"></canvas>
+	<div class="rightSide">
+		<div>
+		</div>
+	</div>
+	</div>
+		<div class="modalEnd">
+        <div class="modal-content-end">
+            <span class="close-button-end">&times;</span>
+            <h1 id="gameOver">Game Over!</h1>
+           	<div class="retry-end">Retry?</div>
+        </div>
+    </div>
+	</div>
+	<div class="footer">
+		<h3>Instructions</h3>
+		<p>Press left and right buttons to move pieces left and right.</p>
+		<p>Press the down button to move the pieces down.</p>
+		<p>Press "Q" and "E" buttons to move pieces anti-clockwise & clockwise respectively.</p>
+	</div>
+	</div>
+	<script src="script.js"></script>
+	<script src="soccer.js"></script>
+</body>
+</html>
