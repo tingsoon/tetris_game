@@ -4,15 +4,19 @@
 // };
 
 window.onload = function() {
-   document.all.sound.src = "audio/gameStart.ogg";
+   // document.all.sound = "audio/gameStart.ogg";
+   document.all.sound;
+   toggleModalStart();
 };
 
+let gameStartAudio = new Audio;
 let clearRowSound = new Audio;
 let collideSound = new Audio;
 let gameOverSound = new Audio;
 let moveSound = new Audio;
 let rotateSound = new Audio;
 
+gameStartAudio.src = "audio/gameStart.ogg"
 clearRowSound.src = "audio/clearRow.ogg";
 collideSound.src = "audio/collide.ogg";
 gameOverSound.src = "audio/gameOver.ogg";
@@ -286,7 +290,7 @@ function rotate(matrix, dir) {
 // 1 sec per drop
 
 let dropCounter = 0;
-let dropInterval = 1000;
+let dropInterval = 100000000000;
 
 let lastTime = 0;
 
@@ -297,7 +301,7 @@ function update(time = 0) {
    dropCounter += deltaTime;
    if (dropCounter > dropInterval) {
      playerDrop();
-     // moveSound.play();
+     moveSound.play();
    };
    // if game ends,
    if (collide(arena, player)) {

@@ -125,16 +125,21 @@
 
 
 
-// modal start
-
-
-
 // modal end
 
 var modalEnd = document.querySelector(".modalEnd");
 var trigger = document.querySelector(".trigger");
 var closeButtonEnd = document.querySelector(".close-button-end");
 var retry = document.querySelector('.retry-end');
+
+// modal start
+
+var modalStart = document.querySelector('.modalStart');
+var startGameButton = document.querySelector('.game-start');
+
+function toggleModalStart() {
+	modalStart.classList.toggle('show-modal-start');
+};
 
 function toggleModalEnd() {
     modalEnd.classList.toggle("show-modal-end");
@@ -148,6 +153,12 @@ function windowOnClick(event) {
     	resetGame();
     	toggleModalEnd();
     }
+    if (event.target === startGameButton) {
+    	dropInterval = 1000;
+		resetGame();
+		toggleModalStart();
+		gameStartAudio.play();
+	}
 }
 
 closeButtonEnd.addEventListener("click", toggleModalEnd);
@@ -156,6 +167,12 @@ window.addEventListener("click", windowOnClick);
 
 
 
+// function windowOnClick(event) {
+// 	if (event.target === startGameButton) {
+// 		resetGame();
+// 		toggleModalStart();
+// 	}
+// }
 
 
 
