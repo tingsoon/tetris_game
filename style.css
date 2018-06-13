@@ -1,16 +1,17 @@
 body {
-	background-color: black;
+	/*background-color: black;*/
 	overflow: hidden;
+	background-image: url(background_tetris.gif);
 }
 
 div {
 	font-family: 'Press Start 2P';
 	color: white;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 h2 {
-	font-family: 'Limelight', cursive;
+	font-family: 'Black Ops One', cursive;
 	font-size: 100px;
 	color: white;
 }
@@ -25,14 +26,14 @@ h3 {
 }
 
 .header {
-	width: 1000px;
+	width: 1200px;
 	height: 100px;
 	position: relative;
 	margin: 4em auto;
 }
 
 .footer {
-	width: 1000px;
+	width: 1200px;
 	height: 100px;
 	position: relative;
 	margin: 0 auto;
@@ -46,7 +47,7 @@ canvas {
 	border: 3px solid white;
 }
 .container {
-	width: 1000px;
+	width: 1200px;
 	height: 800px;
 	margin: 3em auto;
 	text-align: center;
@@ -65,13 +66,16 @@ canvas {
 }
 .rightSide {
 	display: inline-block;
-	height: 600px;
-	width: 100px;
-	position: relative;
-	bottom: 585px;
+    height: 600px;
+    width: 100px;
+    position: relative;
+    bottom: 450px;
 }
 #score {
 	height: 50px;
+}
+.score {
+	font-size: 15px;
 }
 
 

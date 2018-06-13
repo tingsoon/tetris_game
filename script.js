@@ -1,5 +1,23 @@
+// load music
+// window.onload = function() {
+//    document.all.sound.src = "tetris_dubstep.mp3";
+// };
 
+window.onload = function() {
+   document.all.sound.src = "audio/gameStart.ogg";
+};
 
+let clearRowSound = new Audio;
+let collideSound = new Audio;
+let gameOverSound = new Audio;
+let moveSound = new Audio;
+let rotateSound = new Audio;
+
+clearRowSound.src = "audio/clearRow.ogg";
+collideSound.src = "audio/collide.ogg";
+gameOverSound.src = "audio/gameOver.ogg";
+moveSound.src = "audio/move.ogg";
+rotateSound.src = "audio/rotate.ogg";
 
 // create constants
 const canvas = document.getElementById('tetris');
@@ -31,6 +49,7 @@ function removeRow() {
         // since we remove a row, need to offset the row
         y++;
         // console.log("value of y: " + y);
+        clearRowSound.play();
 
         // 1 row 10 points, 2 rows 30 points, 3 rows 70 points, 4 rows 150 points.
         // player.score += rowCount * 10;
@@ -69,6 +88,7 @@ function collide(arena, player) {
          // if no row exists, counts as collision also
          if (m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
             return true;
+            collideSound.play();
          };
       };
    };
@@ -277,12 +297,19 @@ function update(time = 0) {
    dropCounter += deltaTime;
    if (dropCounter > dropInterval) {
      playerDrop();
+     // moveSound.play();
    };
-
+   // if game ends,
    if (collide(arena, player)) {
       arena.forEach(function(row) {
       row.fill(0)});
+      // need to push it into an array
+      player.highscore.push(player.score);
+      updateHighScore();
+
       toggleModalEnd();
+
+      gameOverSound.play();
       player.position.y = 0;
    }
 
@@ -295,12 +322,17 @@ function updateScore() {
     document.getElementById('score').innerText = player.score;
 };
 
+function updateHighScore() {
+   document.getElementById('highscore').innerText = Math.max.apply(null, player.highscore);
+};
+
 const arena = createMatrix(12, 20);
 
 const player = {
    position : {x: 0, y : 0},
    matrix: null,
    score: 0,
+   highscore: [0],
    // team: "",
    // opponent: "",
    // opponentPoints: 0,
@@ -309,25 +341,46 @@ const player = {
 document.addEventListener('keydown', function(event) {
    if (event.keyCode === 37) {
       playerMove(-1);
+      moveSound.play();
    }
    else if (event.keyCode === 39) {
       playerMove(+1);
+      moveSound.play();
    }
    else if (event.keyCode === 40) {
       playerDrop();
+      moveSound.play();
    }
    else if (event.keyCode === 81) {
       playerRotate(-1);
+      rotateSound.play();
    }
    else if (event.keyCode === 69) {
       playerRotate(1);
-   };
+      rotateSound.play();
+   }
+});
 
+document.addEventListener('keydown', function(event) {
+   if (event.keyCode === 32) {
+      dropInterval = 40;
+      playerDrop();
+      moveSound.play();
+   }
+});
+
+document.addEventListener('keyup', function(event) {
+   if (event.keyCode === 32) {
+      dropInterval = 1000;
+      playerDrop();
+      moveSound.play();
+   }
 });
 
 playerReset();
 updateScore();
 update();
+updateHighScore();
 
 function resetGame() {
       player.score = 0;
