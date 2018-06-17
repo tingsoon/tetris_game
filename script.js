@@ -27,7 +27,41 @@ rotateSound.src = "audio/rotate.ogg";
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
+const player = {
+   position : {x: 0, y : 0},
+   matrix: null,
+   score: 0,
+   highscore: [0],
+   // team: "",
+   // opponent: "",
+   // opponentPoints: 0,
+};
+
+
 context.scale(30, 30);
+
+// 1 sec per drop
+
+let dropCounter = 0;
+let dropInterval = 100000000000;
+
+function updateInterval() {
+
+if (player.score >= 1000 && player.score < 2000) {
+   dropInterval = 500;
+} else if (player.score >= 2000 && player.score < 3000) {
+   dropInterval = 250;
+} else if (player.score >= 3000 && player.score < 4000) {
+   dropInterval = 125;
+} else if (player.score >= 4000 && player.score < 5000) {
+   dropInterval = 75;
+} else if (player.score >= 5000) {
+   dropInterval = 40;
+} else {
+   dropInterval = 1000;
+};
+   console.log(dropInterval);
+};
 
 // removes row
 function removeRow() {
@@ -54,11 +88,12 @@ function removeRow() {
         y++;
         // console.log("value of y: " + y);
         clearRowSound.play();
+        updateInterval();
 
         // 1 row 10 points, 2 rows 30 points, 3 rows 70 points, 4 rows 150 points.
         // player.score += rowCount * 10;
         rowCount *= 2;
-        console.log("value of rowCount: " + rowCount);
+        // console.log("value of rowCount: " + rowCount);
         if (rowCount == 2) {
          player.score += 40;
         }
@@ -245,9 +280,9 @@ function playerRotate(dir) {
       player.position.x += offset;
       offset = -(offset + offset);
       if (offset > 0 ) {
-         offset = -(offset - 1);
-      } else  {
          offset = -(offset + 1);
+      } else  {
+         offset = -(offset - 1);
       };
       // prevent offset from going infinite
       if (offset > player.matrix[0].length) {
@@ -287,10 +322,8 @@ function rotate(matrix, dir) {
    };
 
 
-// 1 sec per drop
 
-let dropCounter = 0;
-let dropInterval = 100000000000;
+
 
 let lastTime = 0;
 
@@ -318,6 +351,7 @@ function update(time = 0) {
    }
 
    draw();
+   // keeping calling the update function over and over again.
    requestAnimationFrame(update);
 };
 
@@ -332,15 +366,6 @@ function updateHighScore() {
 
 const arena = createMatrix(12, 20);
 
-const player = {
-   position : {x: 0, y : 0},
-   matrix: null,
-   score: 0,
-   highscore: [0],
-   // team: "",
-   // opponent: "",
-   // opponentPoints: 0,
-};
 
 document.addEventListener('keydown', function(event) {
    if (event.keyCode === 37) {
@@ -351,22 +376,27 @@ document.addEventListener('keydown', function(event) {
       playerMove(+1);
       moveSound.play();
    }
-   else if (event.keyCode === 40) {
-      playerDrop();
-      moveSound.play();
-   }
-   else if (event.keyCode === 81) {
+   // else if (event.keyCode === 40) {
+   //    playerDrop();
+   //    moveSound.play();
+   // }
+    else if (event.keyCode === 38) {
       playerRotate(-1);
       rotateSound.play();
    }
-   else if (event.keyCode === 69) {
-      playerRotate(1);
-      rotateSound.play();
-   }
+
+   // else if (event.keyCode === 81) {
+   //    playerRotate(-1);
+   //    rotateSound.play();
+   // }
+   // else if (event.keyCode === 69) {
+   //    playerRotate(1);
+   //    rotateSound.play();
+   // }
 });
 
 document.addEventListener('keydown', function(event) {
-   if (event.keyCode === 32) {
+   if (event.keyCode === 40) {
       dropInterval = 40;
       playerDrop();
       moveSound.play();
@@ -374,21 +404,25 @@ document.addEventListener('keydown', function(event) {
 });
 
 document.addEventListener('keyup', function(event) {
-   if (event.keyCode === 32) {
-      dropInterval = 1000;
+   if (event.keyCode === 40) {
+      // dropInterval = 1000;
+      updateInterval();
       playerDrop();
       moveSound.play();
    }
 });
 
+
 playerReset();
 updateScore();
 update();
+updateInterval();
 updateHighScore();
 
 function resetGame() {
       player.score = 0;
       updateScore();
+      updateInterval();
       arena.forEach(function(row) {
       row.fill(0);
       player.position.y = 0;

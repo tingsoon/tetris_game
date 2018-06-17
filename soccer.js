@@ -154,7 +154,7 @@ function windowOnClick(event) {
     	toggleModalEnd();
     }
     if (event.target === startGameButton) {
-    	dropInterval = 1000;
+    	updateInterval();
 		resetGame();
 		toggleModalStart();
 		gameStartAudio.play();
