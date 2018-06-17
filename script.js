@@ -88,7 +88,7 @@ function removeRow() {
         y++;
         // console.log("value of y: " + y);
         clearRowSound.play();
-        updateInterval();
+        
 
         // 1 row 10 points, 2 rows 30 points, 3 rows 70 points, 4 rows 150 points.
         // player.score += rowCount * 10;
@@ -107,6 +107,7 @@ function removeRow() {
          player.score += 900;
         }
         updateScore();
+        updateInterval();
     };
 
 };
